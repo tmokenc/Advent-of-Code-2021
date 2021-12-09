@@ -1,16 +1,52 @@
 mod part1 {
-  pub fn dive(input: &str) -> u64 {
-    0
-  }
+    pub fn dive(input: &str) -> i64 {
+        let mut position = 0i64;
+        let mut depth = 0i64;
+        
+        for line in input.lines() {
+            let mut iter = line.split_whitespace();
+            let direction = iter.next().unwrap_or_default();
+            let num = iter.next().and_then(|v| v.parse::<i64>().ok()).unwrap_or_default();
+            
+            match direction {
+                "forward" => position += num,
+                "up" => depth -= num,
+                "down" => depth += num,
+                _ => ()
+            }
+        }
+        
+        position * depth
+    }
 }
 
 mod part2 {
-  pub fn dive(input: &str) -> u64 {
-    0
-  }
+    pub fn dive(input: &str) -> i64 {
+        let mut position = 0i64;
+        let mut depth = 0i64;
+        let mut aim = 0i64;
+        
+        for line in input.lines() {
+            let mut iter = line.split_whitespace();
+            let direction = iter.next().unwrap_or_default();
+            let num = iter.next().and_then(|v| v.parse::<i64>().ok()).unwrap_or_default();
+            
+            match direction {
+                "forward" => {
+                    position += num;
+                    depth += aim * num;
+                }
+                "up" => aim -= num,
+                "down" => aim += num,
+                _ => ()
+            }
+        }
+        
+        position * depth
+    }
 }
 
-fn main() -> std::io::Result<()>
+fn main() -> std::io::Result<()> {
     let input = std::fs::read_to_string("./input/day2.txt")?;
     let example_input = std::fs::read_to_string("./input/example/day2.txt")?;
 
