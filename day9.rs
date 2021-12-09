@@ -112,11 +112,8 @@ mod part2 {
                 possible_moves.extend(next_moves(x, y));
             }
             
-            for largest in &mut largest_3 {
-                if result > *largest {
-                    *largest = result;
-                    break;
-                }
+            if result > largest_3[0] {
+                largest_3[0] = result;
             }
             
             largest_3.sort_unstable();
