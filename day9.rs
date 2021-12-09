@@ -114,9 +114,8 @@ mod part2 {
             
             if result > largest_3[0] {
                 largest_3[0] = result;
+                largest_3.sort_unstable();
             }
-            
-            largest_3.sort_unstable();
         }
         
         largest_3.iter().product()
