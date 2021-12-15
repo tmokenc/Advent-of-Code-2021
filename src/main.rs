@@ -8,7 +8,7 @@ mod day7;
 mod day8;
 mod day9;
 mod day10;
-// mod day11;
+mod day11;
 
 use std::time::{Duration, Instant};
 use std::path::Path;
@@ -56,6 +56,7 @@ impl Solution {
             8 => Self::new::<day8::SevenSegmentSearch>(8),
             9 => Self::new::<day9::SmokeBasin>(9),
             10 => Self::new::<day10::SyntaxScoring>(10),
+            11 => Self::new::<day11::DumboOctopus>(11),
             _ => None,
         }
     }
