@@ -12,8 +12,9 @@ mod day11;
 
 use std::time::{Duration, Instant};
 use std::path::Path;
+use humantime::format_duration;
 
-fn time(f: impl Fn() -> u64) -> (u64, Duration) {
+fn time<T>(f: impl Fn() -> T) -> (T, Duration) {
     let start = Instant::now();
     let res = f();
     let time = start.elapsed();
@@ -22,12 +23,42 @@ fn time(f: impl Fn() -> u64) -> (u64, Duration) {
 }
 
 struct Solution {
-    example: Box<dyn AdventOfCode>,
-    solution: Box<dyn AdventOfCode>,
-    day: u8,
+    app: Box<dyn AdventOfCode>,
+    parse_time: Duration,
 }
 
 impl Solution {
+    fn new<AoC: AdventOfCode + 'static>(input: &str) -> Self {
+        let (app, parse_time) = time(|| AoC::new(input));
+        
+        Self {
+            app: Box::new(app) as Box<_>,
+            parse_time,
+        }
+    }
+}
+
+impl Solution {
+    fn run(&self) {
+        println!("Input parsed in {}", format_duration(self.parse_time));
+        
+        let (res, timed) = time(|| self.app.part1());
+        println!("Part 1: {} ({})", res, format_duration(timed));
+        
+        let (res, timed) = time(|| self.app.part2());
+        println!("Part 2: {} ({})", res, format_duration(timed));
+        
+        println!("");
+    }
+}
+
+struct Solutions {
+    example: Solution,
+    solution: Solution,
+    day: u8,
+}
+
+impl Solutions {
     fn new<AoC: AdventOfCode + 'static>(day: u8) -> Option<Self> {
         let input_name = format!("day{}.txt", day);
         let example_path = Path::new("./input/example/").join(&input_name);
@@ -36,8 +67,8 @@ impl Solution {
         let example_input = std::fs::read_to_string(example_path).ok()?;
         let input = std::fs::read_to_string(input_path).ok()?;
         
-        let example = Box::new(AoC::new(example_input.trim())) as Box<_>;
-        let solution = Box::new(AoC::new(input.trim())) as Box<_>;
+        let example = Solution::new::<AoC>(&example_input);
+        let solution = Solution::new::<AoC>(&input);
         
         Some(Self {
             example, solution, day
@@ -63,11 +94,12 @@ impl Solution {
     
     fn run(&self) {
         println!("DAY {}", self.day);
+        
         println!("Example");
-        run(&*self.example);
+        self.example.run();
+        
         println!("Solution");
-        run(&*self.solution);
-        println!("");
+        self.solution.run();
     }
 }
 
@@ -77,37 +109,15 @@ pub trait AdventOfCode {
     fn part2(&self) -> u64;
 }
 
-fn run(aoc: &dyn AdventOfCode) {
-    let (res, timed) = time(|| aoc.part1());
-    println!("Part 1: {} ({}ms)", res, timed.as_millis());
-    
-    let (res, timed) = time(|| aoc.part2());
-    println!("Part 2: {} ({}ms)", res, timed.as_millis());
-}
-
-impl AdventOfCode for () {
-    fn new(_: &str) -> Self {
-        ()
-    }
-    
-    fn part1(&self) -> u64 {
-        0
-    }
-    
-    fn part2(&self) -> u64 {
-        0
-    }
-}
-
 fn main() -> Result<(), String> {
     let day = std::env::args().nth(1).and_then(|v| v.parse::<u8>().ok());
     
     match day {
-        Some(d) => Solution::get(d)
+        Some(d) => Solutions::get(d)
             .ok_or(format!("Cannot get any solution for day {}", d))?
             .run(),
         None => (1..=25)
-            .filter_map(|d| Solution::get(d))
+            .filter_map(|d| Solutions::get(d))
             .for_each(|v| v.run()),
     }
     
