@@ -31,8 +31,8 @@ struct Solution {
 impl Solution {
     fn new<AoC: AdventOfCode + 'static>(day: u8) -> Result<Self> {
         let input_name = format!("day{}.txt", day);
-        let example_path = AsRef::<Path>::as_ref("./input/example/").join(&input_name);
-        let input_path = AsRef::<Path>::as_ref("./input/").join(&input_name);
+        let example_path = Path::new("./input/example/").join(&input_name);
+        let input_path = Path::new("./input/").join(&input_name);
         
         let example_input = std::fs::read_to_string(example_path)?;
         let input = std::fs::read_to_string(input_path)?;
