@@ -67,6 +67,7 @@ impl Solution {
         run(&*self.example);
         println!("Solution");
         run(&*self.solution);
+        println!("");
     }
 }
 
@@ -105,10 +106,7 @@ fn main() -> std::io::Result<()> {
         Some(d) => Solution::get(d)?.run(),
         None => (1..=25)
             .filter_map(|d| Solution::get(d).ok())
-            .for_each(|v| {
-                v.run();
-                println!("");
-            }),
+            .for_each(|v| v.run()),
     }
     
     Ok(())
