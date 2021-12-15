@@ -14,15 +14,28 @@ pub fn parse_char_to_input(ch: char) -> (usize, bool) {
     }
 }
 
-mod part1 {
-    pub fn syntax_scoring(input: &str) -> u64 {
-        const MULTIPLYER: [u64; 4] = [3, 57, 1197, 25137];
+pub struct SyntaxScoring {
+    data: Vec<Vec<char>>,
+}
+
+impl crate::AdventOfCode for SyntaxScoring {
+    fn new(input: &str) -> Self {
+        let data = input
+            .lines()
+            .map(|v| v.chars().collect::<Vec<_>>())
+            .collect::<Vec<_>>();
+            
+        Self { data }
+    }
+    
+    fn part1(&self) -> u64 {
+        const MULTIPLIER: [u64; 4] = [3, 57, 1197, 25137];
         let mut score = [0u64; 4];
 
-        for line in input.lines() {
+        for line in &self.data {
             let mut states = Vec::new();
-            for ch in line.chars() {
-                let (idx, closing) = super::parse_char_to_input(ch);
+            for ch in line {
+                let (idx, closing) = parse_char_to_input(*ch);
 
                 if closing {
                     match states.pop() {
@@ -38,19 +51,17 @@ mod part1 {
             }
         }
 
-        score.iter().zip(MULTIPLYER).map(|(s, m)| s * m).sum()
+        score.iter().zip(MULTIPLIER).map(|(s, m)| s * m).sum()
     }
-}
-
-mod part2 {
-    pub fn syntax_scoring(input: &str) -> u64 {
+    
+    fn part2(&self) -> u64 {
         let mut scores = Vec::new();
 
-        'line: for line in input.lines() {
+        'line: for line in &self.data {
             let mut states = Vec::new();
 
-            for ch in line.chars() {
-                let (idx, closing) = super::parse_char_to_input(ch);
+            for ch in line {
+                let (idx, closing) = parse_char_to_input(*ch);
 
                 if closing {
                     match states.pop() {
@@ -75,17 +86,4 @@ mod part2 {
         scores.sort_unstable();
         scores[scores.len() / 2]
     }
-}
-
-fn main() -> std::io::Result<()> {
-    let input = std::fs::read_to_string("./input/day10.txt")?;
-    let example_input = std::fs::read_to_string("./input/example/day10.txt")?;
-
-    println!("Day10 Part 1 Example: {}", part1::syntax_scoring(&example_input));
-    println!("Day10 Part 1: {}", part1::syntax_scoring(&input));
-
-    println!("Day10 Part 2 Example: {}", part2::syntax_scoring(&example_input));
-    println!("Day10 Part 2: {}", part2::syntax_scoring(&input));
-
-    Ok(())
 }

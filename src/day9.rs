@@ -1,24 +1,29 @@
-pub fn parse_height_map(s: &str) -> Vec<Vec<u8>> {
-    let mut res = Vec::new();
-    
-    for line in s.lines() {
-        let y = line.chars().map(|v| v.to_digit(10).unwrap() as u8).collect();
-        res.push(y);
-    }
-    
-    res
+use std::collections::HashSet;
+
+pub struct SmokeBasin {
+    map: Vec<Vec<u8>>,
 }
 
-mod part1 {
-    pub fn smoke_basin(input: &str) -> u64 {
-        let map = super::parse_height_map(input);
+impl crate::AdventOfCode for SmokeBasin {
+    fn new(input: &str) -> Self {
+        let mut map = Vec::new();
+        
+        for line in input.lines() {
+            let y = line.chars().map(|v| v.to_digit(10).unwrap() as u8).collect();
+            map.push(y);
+        }
+        
+        Self { map }
+    }
+    
+    fn part1(&self) -> u64 {
         let mut risk = 0;
         
-        if map.is_empty() || map[0].is_empty() {
+        if self.map.is_empty() || self.map[0].is_empty() {
             return 0;
         }
         
-        for (y, row) in map.iter().enumerate() {
+        for (y, row) in self.map.iter().enumerate() {
             for (x, value) in row.iter().copied().enumerate() {
                 if value > 8 {
                     continue
@@ -31,14 +36,14 @@ mod part1 {
                 }
                 
                 if y != 0 {
-                    to_check.push(map[y-1][x]);
+                    to_check.push(self.map[y-1][x]);
                 }
                 
                 if let Some(t) = row.get(x+1) {
                     to_check.push(*t);
                 }
                 
-                if let Some(row) = map.get(y+1) {
+                if let Some(row) = self.map.get(y+1) {
                     to_check.push(row[x]);
                 }
                 
@@ -50,23 +55,17 @@ mod part1 {
         
         risk
     }
-}
-
-mod part2 {
-    use std::collections::HashSet;
     
-    pub fn smoke_basin(input: &str) -> u64 {
-        let map = super::parse_height_map(input);
-        
+    fn part2(&self) -> u64 {
         let mut visited = HashSet::new();
         let mut largest_3 = [1u64; 3];
         
-        if map.get(0).filter(|v| !v.is_empty()).is_none() {
+        if self.map.get(0).filter(|v| !v.is_empty()).is_none() {
             return 0;
         }
         
-        let x_len = map[0].len();
-        let y_len = map.len();
+        let x_len = self.map[0].len();
+        let y_len = self.map.len();
         
         let next_moves = |x, y| {
             let mut moves = Vec::new();
@@ -93,7 +92,7 @@ mod part2 {
         let iter = (0..x_len)
             .map(|x| std::iter::repeat(x).zip(0..y_len))
             .flatten()
-            .filter(|(x, y)| map[*y][*x] < 9);
+            .filter(|(x, y)| self.map[*y][*x] < 9);
         
         for (x, y) in iter {
             if !visited.insert((x, y)) {
@@ -104,7 +103,7 @@ mod part2 {
             let mut possible_moves = next_moves(x, y);
             
             while let Some((x, y)) = possible_moves.pop() {
-                if !visited.insert((x, y)) || map[y][x] == 9 {
+                if !visited.insert((x, y)) || self.map[y][x] == 9 {
                     continue;
                 }
                 
@@ -120,18 +119,4 @@ mod part2 {
         
         largest_3.iter().product()
     }
-}
-
-
-fn main() -> std::io::Result<()> {
-    let input = std::fs::read_to_string("./input/day9.txt")?;
-    let example_input = std::fs::read_to_string("./input/example/day9.txt")?;
-
-    println!("Day9 Part 1 Example: {}", part1::smoke_basin(&example_input));
-    println!("Day9 Part 1: {}", part1::smoke_basin(&input));
-
-    println!("Day9 Part 2 Example: {}", part2::smoke_basin(&example_input));
-    println!("Day9 Part 2: {}", part2::smoke_basin(&input));
-
-    Ok(())
 }
