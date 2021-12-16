@@ -23,20 +23,23 @@ impl crate::AdventOfCode for Dive {
                 "down" => Direction::Down,
                 _ => unreachable!(),
             };
-            let value = iter.next().and_then(|v| v.parse::<u64>().ok()).unwrap_or_default();
-            
+            let value = iter
+                .next()
+                .and_then(|v| v.parse::<u64>().ok())
+                .unwrap_or_default();
+
             Action { value, direction }
         });
-            
-        Self { 
-            actions: actions.collect()
+
+        Self {
+            actions: actions.collect(),
         }
     }
-    
+
     fn part1(&self) -> u64 {
         let mut position = 0u64;
         let mut depth = 0u64;
-        
+
         for action in &self.actions {
             match action.direction {
                 Direction::Forward => position += action.value,
@@ -44,15 +47,15 @@ impl crate::AdventOfCode for Dive {
                 Direction::Down => depth += action.value,
             }
         }
-        
+
         position * depth
     }
-    
+
     fn part2(&self) -> u64 {
         let mut position = 0u64;
         let mut depth = 0u64;
         let mut aim = 0u64;
-        
+
         for action in &self.actions {
             match action.direction {
                 Direction::Forward => {
@@ -63,7 +66,7 @@ impl crate::AdventOfCode for Dive {
                 Direction::Down => aim += action.value,
             }
         }
-        
+
         position * depth
     }
 }

@@ -5,10 +5,10 @@ pub struct SonarSweep {
 impl crate::AdventOfCode for SonarSweep {
     fn new(input: &str) -> Self {
         Self {
-            data: input.lines().filter_map(|v| v.parse().ok()).collect()
+            data: input.lines().filter_map(|v| v.parse().ok()).collect(),
         }
     }
-    
+
     fn part1(&self) -> u64 {
         self.data
             .iter()
@@ -17,7 +17,7 @@ impl crate::AdventOfCode for SonarSweep {
             .filter(|(a, b)| a > b)
             .count() as u64
     }
-    
+
     fn part2(&self) -> u64 {
         self.data
             .windows(3)

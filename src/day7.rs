@@ -1,5 +1,5 @@
 pub struct TheTreacheryOfWhales {
-    data: Vec<i32>
+    data: Vec<i32>,
 }
 
 impl crate::AdventOfCode for TheTreacheryOfWhales {
@@ -8,10 +8,10 @@ impl crate::AdventOfCode for TheTreacheryOfWhales {
             data: input
                 .split(",")
                 .filter_map(|v| v.parse::<i32>().ok())
-                .collect::<Vec<_>>()
+                .collect::<Vec<_>>(),
         }
     }
-    
+
     fn part1(&self) -> u64 {
         if self.data.is_empty() {
             return 0;
@@ -33,7 +33,7 @@ impl crate::AdventOfCode for TheTreacheryOfWhales {
             .min()
             .unwrap_or(0i32) as u64
     }
-    
+
     fn part2(&self) -> u64 {
         if self.data.is_empty() {
             return 0;
@@ -51,11 +51,16 @@ impl crate::AdventOfCode for TheTreacheryOfWhales {
         }
 
         (min..=max)
-            .map(|v| self.data.iter().copied().map(|x| {
-                let steps = (v - x).abs();
-                (0..=steps).sum::<i32>()
+            .map(|v| {
+                self.data
+                    .iter()
+                    .copied()
+                    .map(|x| {
+                        let steps = (v - x).abs();
+                        (0..=steps).sum::<i32>()
+                    })
+                    .sum()
             })
-            .sum())
             .min()
             .unwrap_or(0i32) as u64
     }

@@ -79,7 +79,7 @@ fn get_digit(digit: &str, digits: &[&str]) -> u8 {
 }
 
 pub struct SevenSegmentSearch {
-    data: Vec<(String, String)>
+    data: Vec<(String, String)>,
 }
 
 impl crate::AdventOfCode for SevenSegmentSearch {
@@ -91,10 +91,10 @@ impl crate::AdventOfCode for SevenSegmentSearch {
                 (iter.next().unwrap(), iter.next().unwrap())
             })
             .collect();
-            
+
         Self { data }
     }
-    
+
     fn part1(&self) -> u64 {
         self.data
             .iter()
@@ -103,19 +103,19 @@ impl crate::AdventOfCode for SevenSegmentSearch {
             .filter(|v| matches!(v.len(), 2 | 3 | 4 | 7))
             .count() as u64
     }
-    
+
     fn part2(&self) -> u64 {
         self.data
             .iter()
             .map(|(wired, display)| {
                 let digits = parse_digits(wired);
                 let mut res = 0;
-    
+
                 for digit in display.split_whitespace() {
                     res *= 10;
                     res += get_digit(digit, &digits) as u64;
                 }
-    
+
                 res
             })
             .sum()

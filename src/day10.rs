@@ -24,10 +24,10 @@ impl crate::AdventOfCode for SyntaxScoring {
             .lines()
             .map(|v| v.chars().collect::<Vec<_>>())
             .collect::<Vec<_>>();
-            
+
         Self { data }
     }
-    
+
     fn part1(&self) -> u64 {
         const MULTIPLIER: [u64; 4] = [3, 57, 1197, 25137];
         let mut score = [0u64; 4];
@@ -53,7 +53,7 @@ impl crate::AdventOfCode for SyntaxScoring {
 
         score.iter().zip(MULTIPLIER).map(|(s, m)| s * m).sum()
     }
-    
+
     fn part2(&self) -> u64 {
         let mut scores = Vec::new();
 

@@ -7,19 +7,19 @@ fn binary_slice_to_num(s: &[u8]) -> u64 {
 }
 
 pub struct BinaryDiagnostic {
-    data: Vec<Vec<u8>>
+    data: Vec<Vec<u8>>,
 }
 
 impl crate::AdventOfCode for BinaryDiagnostic {
     fn new(input: &str) -> Self {
-        Self { 
+        Self {
             data: input
                 .lines()
                 .map(|v| v.bytes().map(|x| x - 48).collect())
                 .collect(),
         }
     }
-    
+
     fn part1(&self) -> u64 {
         let mut iter = self.data.iter();
         let mut data = iter
@@ -29,21 +29,20 @@ impl crate::AdventOfCode for BinaryDiagnostic {
             .map(|v| *v as i32)
             .collect::<Vec<i32>>();
 
-        iter.flat_map(|v| v.iter().enumerate())
-            .for_each(|(i, v)| {
-                if *v == 0 {
-                    data[i] -= 1;
-                } else if *v == 1 {
-                    data[i] += 1;
-                }
-            });
+        iter.flat_map(|v| v.iter().enumerate()).for_each(|(i, v)| {
+            if *v == 0 {
+                data[i] -= 1;
+            } else if *v == 1 {
+                data[i] += 1;
+            }
+        });
 
         let gamma = data.iter().map(|&v| v > 0).fold(0, append_binary);
         let elipsion = data.iter().map(|&v| v < 1).fold(0, append_binary);
 
         gamma * elipsion
     }
-    
+
     fn part2(&self) -> u64 {
         let bit_criteria = |greater: bool| {
             let mut current_pos = 0;
