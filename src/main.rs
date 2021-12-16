@@ -21,7 +21,7 @@ pub trait AdventOfCode {
     fn new(input: &str) -> Self
     where
         Self: Sized;
-        
+
     fn part1(&self) -> u64;
     fn part2(&self) -> u64;
 }
