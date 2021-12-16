@@ -13,6 +13,25 @@ mod day12;
 mod day13;
 mod day14;
 
+const NAMES: &[&str] = &[
+    "Sonar Sweep",
+    "Dive!",
+    "Binary Diagnostic",
+    "Giant Squid",
+    "Hydrothermal Venture",
+    "Lanternfish",
+    "The Treachery of Whales",
+    "Seven Segment Search",
+    "Smoke Basin",
+    "Syntax Scoring",
+    "Dumbo Octopus",
+    "Passage Pathing",
+    "Transparent Origami",
+    "Extended Polymerization",
+    "Chiton",
+    "Packet Decoder",
+];
+
 use humantime::format_duration;
 use std::path::Path;
 use std::time::{Duration, Instant};
@@ -110,7 +129,7 @@ impl Solutions {
     }
 
     fn run(&self) {
-        println!("DAY {}", self.day);
+        println!("DAY {} - {}", self.day, NAMES[self.day as usize - 1]);
 
         println!("Example");
         self.example.run();
@@ -121,16 +140,15 @@ impl Solutions {
 }
 
 fn main() -> Result<(), String> {
-    let day = std::env::args().nth(1).and_then(|v| v.parse::<u8>().ok());
+    let mut days = std::env::args()
+        .skip(1)
+        .filter_map(|v| v.parse::<u8>().ok())
+        .collect::<Vec<_>>();
 
-    match day {
-        Some(d) => Solutions::get(d)
-            .ok_or(format!("Cannot get any solution for day {}", d))?
-            .run(),
-        None => (1..=25)
-            .filter_map(|d| Solutions::get(d))
-            .for_each(|v| v.run()),
+    if days.is_empty() {
+        days = (1..=25).collect();
     }
-
+    
+    days.into_iter().filter_map(|d| Solutions::get(d)).for_each(|v| v.run());
     Ok(())
 }
