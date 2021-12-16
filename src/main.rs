@@ -73,20 +73,23 @@ impl Solution {
 
 impl Solution {
     fn run(&self) {
-        println!("Input parsed in {}", format_duration(self.parse_time).bright_magenta());
+        println!(
+            "Input parsed in {}",
+            format_duration(self.parse_time).bright_magenta()
+        );
 
         let (res, timed) = time(|| self.app.part1());
         println!(
-            "Part 1: {} ({}) (total {})", 
-            res, 
+            "Part 1: {} ({}) (total {})",
+            res,
             format_duration(timed).cyan(),
             format_duration(timed + self.parse_time).bright_cyan(),
         );
 
         let (res, timed) = time(|| self.app.part2());
         println!(
-            "Part 2: {} ({}) (total {})", 
-            res, 
+            "Part 2: {} ({}) (total {})",
+            res,
             format_duration(timed).cyan(),
             format_duration(timed + self.parse_time).bright_cyan(),
         );
@@ -162,6 +165,8 @@ fn main() {
     if days.is_empty() {
         days = (1..=25).collect();
     }
-    
-    days.into_iter().filter_map(|d| Solutions::get(d)).for_each(|v| v.run());
+
+    days.into_iter()
+        .filter_map(|d| Solutions::get(d))
+        .for_each(|v| v.run());
 }
