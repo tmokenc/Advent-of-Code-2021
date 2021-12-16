@@ -9,10 +9,17 @@ mod day8;
 mod day9;
 mod day10;
 mod day11;
+mod day12;
 
 use std::time::{Duration, Instant};
 use std::path::Path;
 use humantime::format_duration;
+
+pub trait AdventOfCode {
+    fn new(input: &str) -> Self where Self: Sized;
+    fn part1(&self) -> u64;
+    fn part2(&self) -> u64;
+}
 
 fn time<T>(f: impl Fn() -> T) -> (T, Duration) {
     let start = Instant::now();
@@ -88,6 +95,7 @@ impl Solutions {
             9 => Self::new::<day9::SmokeBasin>(9),
             10 => Self::new::<day10::SyntaxScoring>(10),
             11 => Self::new::<day11::DumboOctopus>(11),
+            12 => Self::new::<day12::PassagePathing>(12),
             _ => None,
         }
     }
@@ -101,12 +109,6 @@ impl Solutions {
         println!("Solution");
         self.solution.run();
     }
-}
-
-pub trait AdventOfCode {
-    fn new(input: &str) -> Self where Self: Sized;
-    fn part1(&self) -> u64;
-    fn part2(&self) -> u64;
 }
 
 fn main() -> Result<(), String> {
