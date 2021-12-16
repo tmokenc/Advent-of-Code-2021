@@ -1,16 +1,17 @@
-mod day1;
+mod day01;
+mod day02;
+mod day03;
+mod day04;
+mod day05;
+mod day06;
+mod day07;
+mod day08;
+mod day09;
 mod day10;
 mod day11;
 mod day12;
 mod day13;
-mod day2;
-mod day3;
-mod day4;
-mod day5;
-mod day6;
-mod day7;
-mod day8;
-mod day9;
+mod day14;
 
 use humantime::format_duration;
 use std::path::Path;
@@ -90,19 +91,20 @@ impl Solutions {
 
     fn get(day: u8) -> Option<Self> {
         match day {
-            1 => Self::new::<day1::SonarSweep>(1),
-            2 => Self::new::<day2::Dive>(2),
-            3 => Self::new::<day3::BinaryDiagnostic>(3),
-            4 => Self::new::<day4::GiantSquid>(4),
-            5 => Self::new::<day5::HydrothermalVenture>(5),
-            6 => Self::new::<day6::Lanternfish>(6),
-            7 => Self::new::<day7::TheTreacheryOfWhales>(7),
-            8 => Self::new::<day8::SevenSegmentSearch>(8),
-            9 => Self::new::<day9::SmokeBasin>(9),
+            01 => Self::new::<day01::SonarSweep>(1),
+            02 => Self::new::<day02::Dive>(2),
+            03 => Self::new::<day03::BinaryDiagnostic>(3),
+            04 => Self::new::<day04::GiantSquid>(4),
+            05 => Self::new::<day05::HydrothermalVenture>(5),
+            06 => Self::new::<day06::Lanternfish>(6),
+            07 => Self::new::<day07::TheTreacheryOfWhales>(7),
+            08 => Self::new::<day08::SevenSegmentSearch>(8),
+            09 => Self::new::<day09::SmokeBasin>(9),
             10 => Self::new::<day10::SyntaxScoring>(10),
             11 => Self::new::<day11::DumboOctopus>(11),
             12 => Self::new::<day12::PassagePathing>(12),
             13 => Self::new::<day13::TransparentOrigami>(13),
+            14 => Self::new::<day14::ExtendedPolymerization>(14),
             _ => None,
         }
     }
