@@ -19,5 +19,5 @@ cargo run --release -- {DAY_NUMBER}
 ```
 
 ## Dependencies
-**humantime** - to display the running time
-**owo-colors** - to print colored result in terminal
+- **humantime** - to display the running time
+- **owo-colors** - to print colored result in terminal
