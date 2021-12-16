@@ -10,6 +10,7 @@ mod day9;
 mod day10;
 mod day11;
 mod day12;
+mod day13;
 
 use std::time::{Duration, Instant};
 use std::path::Path;
@@ -96,6 +97,7 @@ impl Solutions {
             10 => Self::new::<day10::SyntaxScoring>(10),
             11 => Self::new::<day11::DumboOctopus>(11),
             12 => Self::new::<day12::PassagePathing>(12),
+            13 => Self::new::<day13::TransparentOrigami>(13),
             _ => None,
         }
     }
