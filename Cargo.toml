@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 humantime = "2"
+owo-colors = "3"
