@@ -1,10 +1,6 @@
 # Advent-of-Code-2021
 My solution for the advent of code 2021, written in Rust
 
-## Running time
-My implementation solves AoC 2021 problems from microsecond (us) to 5 milliseconds (ms)<br>
-Exception is the problem day 12 (Passage Pathing) - 88ms
-
 ## Error Handle
 **NOPE!!!** `unwrap()` everything everywhere
 
@@ -36,9 +32,12 @@ cargo run --release -- {DAY_NUMBER}
 | [12 - Passage Pathing](/src/day12.rs) | 11us | 2ms 822us | 125ms | [🔗](https://adventofcode.com/2021/12) |
 | [13 - Transparent Origami](/src/day13.rs) | 209us | 152us | 1ms 120us | [🔗](https://adventofcode.com/2021/13) |
 | [14 - Extended Polymerization](/src/day14.rs) | 8us | 35us | 164us | [🔗](https://adventofcode.com/2021/14) |
-| [15 - Chiton](/src/day15.rs) | 23us | 2s 605ms | 1h 25m | [🔗](https://adventofcode.com/2021/15) |
+| [15 - Chiton](/src/day15.rs) | 33us | 2s 541ms | **1h 20m** | [🔗](https://adventofcode.com/2021/15) |
 | 16 - Packet Decoder | - | - | - | [🔗](https://adventofcode.com/2021/16) |
 | 17 - Trick Shot | - | - | - | [🔗](https://adventofcode.com/2021/17) |
+
+#### Note
+- Day 15: yep, [1 hour and 20 minutes](https://imgur.com/a/yAlGIHN), I'm suck at graph related algorithm
 
 ## Dependencies
 - **humantime** - to display the running time
