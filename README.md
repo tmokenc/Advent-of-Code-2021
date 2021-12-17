@@ -21,7 +21,7 @@ cargo run --release -- {DAY_NUMBER}
 ## Performance
 
 | Day - Name | Parse time | Part 1 | Part 2 |
-|---|---|---|---|---|
+| :--- | :---: | :---: | :---: | :---: |
 | [01 - Sonar Sweep](https://adventofcode.com/2021/day/1) | 93us | 4us | 19us |
 | [02 - Dive!](https://adventofcode.com/2021/day/2) | 79us | 8us | 8us |
 | [03 - Binary Diagnostic](https://adventofcode.com/2021/day/3) | 131us | 86us | 61us |
