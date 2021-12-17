@@ -70,16 +70,29 @@ pub struct Chiton {
 }
 
 impl Chiton {
+    fn get(&self, coord: &Coord) -> u8 {
+        let x_size = self.map.len();
+        let y_size = self.map[0].len();
+        let mx = (coord.0 / x_size) as u8;
+        let my = (coord.1 / y_size) as u8;
+        let x = coord.0 % x_size;
+        let y = coord.1 % y_size;
+        let mut risk = self.map[x][y] + mx + my;
+
+        if risk > 9 {
+            risk -= 9;
+        }
+
+        risk
+    }
+
     // dijkstra
-    fn cal_lowest_risk(&self) -> u64 {
+    fn cal_lowest_risk(&self, dest: Coord) -> u64 {
         let mut queue: HashSet<Coord> = HashSet::new();
         let mut dist: HashMap<Coord, u64> = HashMap::new();
 
-        let last_x_idx = self.map.len() - 1;
-        let last_y_idx = self.map[0].len() - 1;
-
-        (0..=last_x_idx)
-            .flat_map(|x| iter::repeat(x).zip(0..=last_y_idx))
+        (0..=dest.0)
+            .flat_map(|x| iter::repeat(x).zip(0..=dest.1))
             .for_each(|c| {
                 dist.insert(c.clone(), u64::MAX);
                 queue.insert(c);
@@ -88,8 +101,12 @@ impl Chiton {
         dist.insert((0, 0), 0);
 
         while let Some(coord) = take_min(&mut queue, &dist) {
-            for next_coord in next_coords(&coord, last_x_idx, last_y_idx) {
-                let alt = dist[&coord] + self.map[next_coord.0][next_coord.1] as u64;
+            if coord == dest {
+                return dist[&coord];
+            }
+
+            for next_coord in next_coords(&coord, dest.0, dest.1) {
+                let alt = dist[&coord] + self.get(&next_coord) as u64;
 
                 if alt < dist[&next_coord] {
                     dist.insert(next_coord, alt);
@@ -97,7 +114,7 @@ impl Chiton {
             }
         }
 
-        dist.get(&(last_x_idx, last_y_idx)).copied().unwrap()
+        dist.get(&dest).copied().unwrap()
     }
 
     // fn cal_lowest_risk(&self) -> u64 {
@@ -148,14 +165,14 @@ impl crate::AdventOfCode for Chiton {
     }
 
     fn part1(&self) -> u64 {
-        self.cal_lowest_risk()
+        let last_x_idx = self.map.len() - 1;
+        let last_y_idx = self.map[0].len() - 1;
+        self.cal_lowest_risk((last_x_idx, last_y_idx))
     }
 
     fn part2(&self) -> u64 {
-        let mut new_map = self.clone();
-
-        // new_map.map.resize(self.map.len() * 5, Vec::new());
-
-        new_map.cal_lowest_risk()
+        let last_x_idx = self.map.len() * 5 - 1;
+        let last_y_idx = self.map[0].len() * 5 - 1;
+        self.cal_lowest_risk((last_x_idx, last_y_idx))
     }
 }
