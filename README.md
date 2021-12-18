@@ -35,11 +35,13 @@ These timing was done on my shitty $5 VPS
 | [13 - Transparent Origami](/src/day13.rs) | 209us | 152us | 1ms 120us | [🔗](https://adventofcode.com/2021/day/13) |
 | [14 - Extended Polymerization](/src/day14.rs) | 8us | 35us | 164us | [🔗](https://adventofcode.com/2021/day/14) |
 | [15 - Chiton](/src/day15.rs) | 16us | 5ms 977us | 183ms | [🔗](https://adventofcode.com/2021/day/15) |
-| 16 - Packet Decoder | - | - | - | [🔗](https://adventofcode.com/2021/day/16) |
-| 17 - Trick Shot | - | - | - | [🔗](https://adventofcode.com/2021/day/17) |
+| [16 - Packet Decoder](/src/day16/rs | - | - | - | [🔗](https://adventofcode.com/2021/day/16) |
+| [17 - Trick Shot](/src/day17.rs) | 1us 169ns | 187ns | 504us 113ns | [🔗](https://adventofcode.com/2021/day/17) |
+| [18 - Snailfish](/src/day18.rs) | - | - | - | [🔗](https://adventofcode.com/2021/day/18) |
 
 #### Note
 - Day 15: ~~yep, [1 hour and 20 minutes](https://imgur.com/a/yAlGIHN)~~ Well, its execution time is now under 200 milliseconds...
+- Day 17: Brute force the part 2
 
 ## Dependencies
 - **humantime** - to display the running time
