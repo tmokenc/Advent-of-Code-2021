@@ -32,12 +32,12 @@ cargo run --release -- {DAY_NUMBER}
 | [12 - Passage Pathing](/src/day12.rs) | 11us | 2ms 822us | 125ms | [🔗](https://adventofcode.com/2021/day/12) |
 | [13 - Transparent Origami](/src/day13.rs) | 209us | 152us | 1ms 120us | [🔗](https://adventofcode.com/2021/day/13) |
 | [14 - Extended Polymerization](/src/day14.rs) | 8us | 35us | 164us | [🔗](https://adventofcode.com/2021/day/14) |
-| [15 - Chiton](/src/day15.rs) | 33us | 2s 541ms | **1h 20m** | [🔗](https://adventofcode.com/2021/day/15) |
+| [15 - Chiton](/src/day15.rs) | 16us | 5ms 977us | 183ms | [🔗](https://adventofcode.com/2021/day/15) |
 | 16 - Packet Decoder | - | - | - | [🔗](https://adventofcode.com/2021/day/16) |
 | 17 - Trick Shot | - | - | - | [🔗](https://adventofcode.com/2021/day/17) |
 
 #### Note
-- Day 15: yep, [1 hour and 20 minutes](https://imgur.com/a/yAlGIHN), I'm suck at graph related algorithm
+- Day 15: ~~yep, [1 hour and 20 minutes](https://imgur.com/a/yAlGIHN)~~ Well, its execution time is now under 200 milliseconds...
 
 ## Dependencies
 - **humantime** - to display the running time
