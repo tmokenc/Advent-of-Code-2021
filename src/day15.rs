@@ -1,45 +1,30 @@
-use std::collections::{HashMap, HashSet};
-use std::iter;
+use std::collections::{HashSet, BinaryHeap};
+use std::cmp::Ordering;
 
 type Coord = (usize, usize);
 
-// #[derive(Clone)]
-// struct QueueNode {
-//     coord: Coord,
-//     value: u64,
-// }
-//
-// use std::cmp::Ordering;
-// use std::collections::BTreeSet;
-//
-// impl PartialEq for QueueNode {
-//     fn eq(&self, other: &Self) -> bool {
-//         self.coord == other.coord
-//     }
-// }
-//
-// impl Eq for QueueNode {}
-//
-// impl Ord for QueueNode {
-//     fn cmp(&self, other: &Self) -> Ordering {
-//         other.value.cmp(&self.value)
-//     }
-// }
-//
-// impl PartialOrd for QueueNode {
-//     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-//         Some(self.cmp(other))
-//     }
-// }
-//
-// fn pop_first(queue: &mut BTreeSet<QueueNode>) -> Option<QueueNode> {
-//     let first = queue.iter().next()?.clone();
-//     queue.take(&first)
-// }
+#[derive(Clone, Eq)]
+struct QueueNode {
+    coord: Coord,
+    value: u64,
+}
 
-fn take_min(queue: &mut HashSet<Coord>, dist: &HashMap<Coord, u64>) -> Option<Coord> {
-    let min = queue.iter().min_by_key(|v| dist[v])?.to_owned();
-    queue.take(&min)
+impl PartialEq for QueueNode {
+    fn eq(&self, other: &Self) -> bool {
+        self.value == other.value
+    }
+}
+
+impl Ord for QueueNode {
+    fn cmp(&self, other: &Self) -> Ordering {
+        other.value.cmp(&self.value)
+    }
+}
+
+impl PartialOrd for QueueNode {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
 }
 
 fn next_coords(coord: &Coord, max_x: usize, max_y: usize) -> Vec<Coord> {
@@ -85,73 +70,35 @@ impl Chiton {
 
         risk
     }
-
-    // dijkstra
+    
     fn cal_lowest_risk(&self, dest: Coord) -> u64 {
-        let mut queue: HashSet<Coord> = HashSet::new();
-        let mut dist: HashMap<Coord, u64> = HashMap::new();
-
-        (0..=dest.0)
-            .flat_map(|x| iter::repeat(x).zip(0..=dest.1))
-            .for_each(|c| {
-                dist.insert(c.clone(), u64::MAX);
-                queue.insert(c);
-            });
-
-        dist.insert((0, 0), 0);
-
-        while let Some(coord) = take_min(&mut queue, &dist) {
+        let mut queue: BinaryHeap<QueueNode> = Default::default();
+        let mut visited: HashSet<Coord> = Default::default();
+        
+        queue.push(QueueNode {
+            coord: (0, 0),
+            value: 0,
+        });
+        
+        while let Some(QueueNode { coord, value }) = queue.pop() {
             if coord == dest {
-                return dist[&coord];
+                return value;
             }
-
+            
+            if !visited.insert(coord.clone()) {
+                continue;
+            }
+            
             for next_coord in next_coords(&coord, dest.0, dest.1) {
-                let alt = dist[&coord] + self.get(&next_coord) as u64;
-
-                if alt < dist[&next_coord] {
-                    dist.insert(next_coord, alt);
-                }
+                queue.push(QueueNode {
+                    value: value + self.get(&next_coord) as u64,
+                    coord: next_coord,
+                });
             }
         }
-
-        dist.get(&dest).copied().unwrap()
+        
+        unreachable!()
     }
-
-    // fn cal_lowest_risk(&self) -> u64 {
-    //     let mut queue: BTreeSet<QueueNode> = BTreeSet::new();
-    //     let mut dist: HashMap<Coord, u64> = HashMap::new();
-
-    //     let last_x_idx = self.map.len() - 1;
-    //     let last_y_idx = self.map[0].len() - 1;
-
-    //     (0..=last_x_idx)
-    //         .flat_map(|x| iter::repeat(x).zip(0..=last_y_idx))
-    //         .for_each(|c| {
-    //             dist.insert(c.clone(), u64::MAX);
-    //         });
-
-    //     dist.insert((0, 0), 0);
-    //     queue.insert(QueueNode {
-    //         coord: (0, 0),
-    //         value: 0,
-    //     });
-
-    //     while let Some(QueueNode { coord, .. }) = pop_first(&mut queue) {
-    //         for next_coord in next_coords(&coord, last_x_idx, last_y_idx) {
-    //             let alt = dist[&coord] + self.map[next_coord.0][next_coord.1] as u64;
-
-    //             if alt < dist[&next_coord] {
-    //                 dist.insert(next_coord.clone(), alt);
-    //                 queue.insert(QueueNode {
-    //                     coord: next_coord,
-    //                     value: alt,
-    //                 });
-    //             }
-    //         }
-    //     }
-
-    //     dist.get(&(last_x_idx, last_y_idx)).copied().unwrap()
-    // }
 }
 
 impl crate::AdventOfCode for Chiton {
