@@ -64,7 +64,7 @@ impl Chiton {
         let y = coord.1 % y_size;
         let mut risk = self.map[x][y] + mx + my;
 
-        if risk > 9 {
+        while risk > 9 {
             risk -= 9;
         }
 

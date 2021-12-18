@@ -16,6 +16,8 @@ cargo run --release -- {DAY_NUMBER}
 
 ## Performance
 
+These timing was done on my shitty $5 VPS
+
 | Day - Name | Parse time | Part 1 | Part 2 | AoC link |
 | :--------- | ---------: | -----: | -----: | :------: |
 | [01 - Sonar Sweep](/src/day01.rs) | 93us | 4us | 19us | [🔗](https://adventofcode.com/2021/day/1) |
