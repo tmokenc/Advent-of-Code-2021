@@ -1,5 +1,5 @@
-use std::collections::{HashSet, BinaryHeap};
 use std::cmp::Ordering;
+use std::collections::{BinaryHeap, HashSet};
 
 type Coord = (usize, usize);
 
@@ -63,32 +63,32 @@ impl Chiton {
         let x = coord.0 % x_size;
         let y = coord.1 % y_size;
         let mut risk = self.map[x][y] + mx + my;
-        
+
         while risk > 9 {
             risk -= 9;
         }
-        
+
         risk
     }
-    
+
     fn cal_lowest_risk(&self, dest: Coord) -> u64 {
         let mut queue: BinaryHeap<QueueNode> = Default::default();
         let mut visited: HashSet<Coord> = Default::default();
-        
+
         queue.push(QueueNode {
             coord: (0, 0),
             value: 0,
         });
-        
+
         while let Some(QueueNode { coord, value }) = queue.pop() {
             if coord == dest {
                 return value;
             }
-            
+
             if !visited.insert(coord.clone()) {
                 continue;
             }
-            
+
             for next_coord in next_coords(&coord, dest.0, dest.1) {
                 queue.push(QueueNode {
                     value: value + self.get(&next_coord) as u64,
@@ -96,7 +96,7 @@ impl Chiton {
                 });
             }
         }
-        
+
         unreachable!()
     }
 }

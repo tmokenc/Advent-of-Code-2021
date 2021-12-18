@@ -34,7 +34,6 @@ const NAMES: &[&str] = &[
     "Chiton",
     "Packet Decoder",
     "Trick Shot",
-    
 ];
 
 use humantime::format_duration;

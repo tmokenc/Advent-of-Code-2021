@@ -13,15 +13,21 @@ impl Coordinate {
     }
 }
 
-struct Node {
+struct Line {
     from: Coordinate,
     to: Coordinate,
 }
 
-fn count_overlaps<'a>(nodes: impl Iterator<Item = &'a Node>) -> u64 {
+impl Line {
+    fn is_straight(&self) -> bool {
+        self.from.x == self.to.x || self.from.y == self.to.y
+    }
+}
+
+fn count_overlaps<'a>(lines: impl Iterator<Item = &'a Line>) -> u64 {
     let mut map = [[0u8; 1000]; 1000];
 
-    for Node { from, to } in nodes {
+    for Line { from, to } in lines {
         let Coordinate { mut x, mut y } = from;
         map[x][y] += 1;
 
@@ -46,37 +52,33 @@ fn count_overlaps<'a>(nodes: impl Iterator<Item = &'a Node>) -> u64 {
 }
 
 pub struct HydrothermalVenture {
-    nodes: Vec<Node>,
+    lines: Vec<Line>,
 }
 
 impl crate::AdventOfCode for HydrothermalVenture {
     fn new(input: &str) -> Self {
-        let nodes = input
+        let lines = input
             .lines()
             .map(|v| {
                 let mut iter = v.split(" -> ");
                 let from = iter.next().unwrap();
                 let to = iter.next().unwrap();
 
-                Node {
+                Line {
                     from: Coordinate::new(from),
                     to: Coordinate::new(to),
                 }
             })
             .collect::<Vec<_>>();
 
-        Self { nodes }
+        Self { lines }
     }
 
     fn part1(&self) -> u64 {
-        count_overlaps(
-            self.nodes
-                .iter()
-                .filter(|Node { from, to }| from.x == to.x || from.y == to.y),
-        )
+        count_overlaps(self.lines.iter().filter(|line| line.is_straight()))
     }
 
     fn part2(&self) -> u64 {
-        count_overlaps(self.nodes.iter())
+        count_overlaps(self.lines.iter())
     }
 }
