@@ -3,7 +3,7 @@ use std::cmp::Ordering;
 
 type Coord = (usize, usize);
 
-#[derive(Clone, Eq)]
+#[derive(Eq)]
 struct QueueNode {
     coord: Coord,
     value: u64,
@@ -63,11 +63,11 @@ impl Chiton {
         let x = coord.0 % x_size;
         let y = coord.1 % y_size;
         let mut risk = self.map[x][y] + mx + my;
-
+        
         while risk > 9 {
             risk -= 9;
         }
-
+        
         risk
     }
     
