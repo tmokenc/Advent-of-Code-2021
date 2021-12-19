@@ -1,7 +1,7 @@
 use std::iter;
 use std::ops::AddAssign;
 
-#[derive(Debug, Clone)]
+#[derive(Clone)]
 enum SnailfishNumber {
     Number(u8),
     Pair(Box<Self>, Box<Self>),

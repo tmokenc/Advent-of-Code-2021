@@ -37,7 +37,7 @@ These timing was done on my shitty $5 VPS
 | [15 - Chiton](/src/day15.rs) | 16us | 5ms 977us | 183ms | [🔗](https://adventofcode.com/2021/day/15) |
 | [16 - Packet Decoder](/src/day16.rs) | - | - | - | [🔗](https://adventofcode.com/2021/day/16) |
 | [17 - Trick Shot](/src/day17.rs) | 999ns | 100ns | 443us 027ns | [🔗](https://adventofcode.com/2021/day/17) |
-| [18 - Snailfish](/src/day18.rs) | 97us | 2ms 516us | 46ms 757us | [🔗](https://adventofcode.com/2021/day/18) |
+| [18 - Snailfish](/src/day18.rs) | 93us | 2ms 471us | 44ms 780us | [🔗](https://adventofcode.com/2021/day/18) |
 
 #### Note
 - Day 15: ~~yep, [1 hour and 20 minutes](https://imgur.com/a/yAlGIHN)~~ Well, its execution time is now under 200 milliseconds...
