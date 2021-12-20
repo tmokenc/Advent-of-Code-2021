@@ -129,11 +129,12 @@ impl Image {
         let left_iter = ((self.top+1)..self.bottom).map(|y| (self.left, y));
         let right_iter = ((self.top+1)..self.bottom).map(|y| (self.right, y));
         
-        top_iter
+        let light_coords = top_iter
             .chain(bottom_iter)
             .chain(left_iter)
-            .chain(right_iter)
-            .for_each(|coord| { self.light_pixels.insert(coord); })
+            .chain(right_iter);
+        
+        self.light_pixels.extend(light_coords);
     }
     
     fn apply_enhancement(&mut self, enhancement: &Enhancement) {
