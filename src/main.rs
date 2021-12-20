@@ -17,6 +17,7 @@ mod day16;
 mod day17;
 mod day18;
 mod day19;
+mod day20;
 
 const NAMES: &[&str] = &[
     "Sonar Sweep",
@@ -38,6 +39,7 @@ const NAMES: &[&str] = &[
     "Trick Shot",
     "Snailfish",
     "Beacon Scanner",
+    "Trench Map",
 ];
 
 use humantime::format_duration;
@@ -151,6 +153,7 @@ impl Solutions {
             17 => Self::new::<day17::TrickShot>(day),
             18 => Self::new::<day18::Snailfish>(day),
             19 => Self::new::<day19::BeaconScanner>(day),
+            20 => Self::new::<day20::TrenchMap>(day),
             _ => None,
         }
     }
