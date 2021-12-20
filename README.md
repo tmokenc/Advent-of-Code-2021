@@ -38,11 +38,12 @@ These timing was done on my shitty $5 VPS
 | [16 - Packet Decoder](/src/day16.rs) | - | - | - | [🔗](https://adventofcode.com/2021/day/16) |
 | [17 - Trick Shot](/src/day17.rs) | 999ns | 100ns | 443us 027ns | [🔗](https://adventofcode.com/2021/day/17) |
 | [18 - Snailfish](/src/day18.rs) | 93us | 2ms 471us | 44ms 780us | [🔗](https://adventofcode.com/2021/day/18) |
-| [19 - Beacon Scanner](/src/day19.rs) | 256us | 22s 293ms | 21s 692ms | [🔗](https://adventofcode.com/2021/day/19) |
+| [19 - Beacon Scanner](/src/day19.rs) | 21s 394ms | 82ns | 5us 190ns | [🔗](https://adventofcode.com/2021/day/19) |
 
 #### Note
-- Day 15: ~~yep, [1 hour and 20 minutes](https://imgur.com/a/yAlGIHN)~~ Well, its execution time is now under 200 milliseconds...
-- Day 17 part 2: Brute forced it, computer's problems require programming solutions
+- **Day 15 part 2**: ~~yep, [1 hour and 20 minutes](https://imgur.com/a/yAlGIHN)~~ Well, its execution time is now under 200 milliseconds...
+- **Day 17 part 2**: Brute forced it, computer's problems require programming solutions
+- **Day 19**: I calculate the beacons and scanners location while parsing the input since it does not require the full input to be done, that's why the execution time are fast but the parsing is not
 
 ## Dependencies
 - **humantime** - to display the running time

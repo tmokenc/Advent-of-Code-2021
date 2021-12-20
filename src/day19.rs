@@ -39,8 +39,9 @@ fn points_distance(lhs: &Point3D, rhs: &Point3D) -> u64 {
     x + y + z
 }
 
-fn to_view_point((x, y, z): Point3D, view: u8) -> Point3D {
-    match view {
+#[inline]
+fn to_view_point(&(x, y, z): &Point3D, view_idx: u8) -> Point3D {
+    match view_idx {
         1 => (x, y, z),
         2 => (x, z, -y),
         3 => (x, -y, -z),
@@ -75,64 +76,63 @@ fn to_view_point((x, y, z): Point3D, view: u8) -> Point3D {
     }
 }
 
-// location and the beacons
-fn scanners_intersect(base: &Scanner, rhs: &Scanner) -> Option<(Point3D, Scanner)> {
-    for view_idx in 1..=24 {
-        let new_view: Scanner = rhs
-            .iter()
-            .copied()
-            .map(|p| to_view_point(p, view_idx))
-            .collect();
-            
-        let distance_iter = base
-            .iter()
-            .map(|point| std::iter::repeat(point))
-            .flat_map(|point| point.zip(new_view.iter()))
-            .map(|(lhs, rhs)| points_diff(lhs, rhs));
-            
-        for diff in distance_iter {
-            let relocated: Scanner = new_view
-                .iter()
-                .map(|v| add_points(v, &diff))
-                .collect();
-                
-            if relocated.intersection(&base).count() >= 12 {
-                return Some((diff, relocated))
-            }
-        }
-    }
-    
-    None
-}
-
 pub struct BeaconScanner {
-    scanners: Vec<Scanner>,
+    beacons: HashSet<Point3D>,
+    scanners: Vec<Point3D>,
 }
 
 impl BeaconScanner {
-    fn locate(&self) -> (Vec<Point3D>, Scanner) {
-        let mut base = self.scanners[0].to_owned(); // also the base location
-        let mut located_scanners: Vec<Point3D> = Default::default();
-        let mut unlocated_scanners: Vec<Scanner> = self.scanners.get(1..).unwrap().to_owned().to_vec();
-        
-        while let Some(scanner) = unlocated_scanners.pop() {
-            match scanners_intersect(&base, &scanner) {
-                None => unlocated_scanners.insert(0, scanner),
-                Some((location, beacons)) => {
-                    base.extend(beacons);
-                    located_scanners.push(location);
+    fn locate(&mut self, scanner: &Scanner) -> bool {
+        for view_idx in 1..=24 {
+            let new_view: Scanner = scanner
+                .iter()
+                .map(|p| to_view_point(p, view_idx))
+                .collect();
+                
+            let distance_iter = self
+                .beacons
+                .iter()
+                .map(|point| std::iter::repeat(point))
+                .flat_map(|point| point.zip(new_view.iter()))
+                .map(|(lhs, rhs)| points_diff(lhs, rhs));
+                
+            for distance in distance_iter {
+                let relocated: Scanner = new_view
+                    .iter()
+                    .map(|v| add_points(v, &distance))
+                    .collect();
+                    
+                if relocated.intersection(&self.beacons).count() >= 12 {
+                    self.beacons.extend(relocated);
+                    self.scanners.push(distance);
+                    return true;
                 }
             }
         }
         
-        (located_scanners, base)
+        false
     }
 }
 
 impl crate::AdventOfCode for BeaconScanner {
     fn new(input: &str) -> Self {
-        let mut scanners = Vec::new();
-        let mut iter = input.lines();
+        let mut iter = input.lines().skip(1);
+        
+        let mut unlocated_scanners = Vec::new();
+        let mut res = Self {
+            scanners: vec![(0, 0, 0)],
+            beacons: iter
+                .by_ref()
+                .take_while(|v| !v.is_empty())
+                .map(|v| {
+                    let mut i = v.split(',').map(|n| n.parse().unwrap());
+                    let x = i.next().unwrap();
+                    let y = i.next().unwrap();
+                    let z = i.next().unwrap();
+                    (x, y, z)
+                })
+                .collect(),
+        };
         
         while iter.next().is_some() {
             let scanner = iter.by_ref()
@@ -146,22 +146,28 @@ impl crate::AdventOfCode for BeaconScanner {
                 })
                 .collect();
                 
-            scanners.push(scanner);
+            if !res.locate(&scanner) {
+                unlocated_scanners.insert(0, scanner);
+            }
         }
         
-        Self { scanners }
+        while let Some(scanner) = unlocated_scanners.pop() {
+            if !res.locate(&scanner) {
+                unlocated_scanners.insert(0, scanner);
+            }
+        }
+        
+        res
     }
     
     fn part1(&self) -> u64 {
-        self.locate().1.len() as u64
+        self.beacons.len() as u64
     }
     
     fn part2(&self) -> u64 {
-        let scanner_locations = self.locate().0.into_iter().collect::<Vec<_>>();
-        
-        (0..scanner_locations.len()-1)
-            .flat_map(|v| std::iter::repeat(v).zip((v+1)..scanner_locations.len()))
-            .map(|(lhs, rhs)| (&scanner_locations[lhs], &scanner_locations[rhs]))
+        (0..self.scanners.len()-1)
+            .flat_map(|v| std::iter::repeat(v).zip((v+1)..self.scanners.len()))
+            .map(|(lhs, rhs)| (&self.scanners[lhs], &self.scanners[rhs]))
             .map(|(lhs, rhs)| points_distance(lhs, rhs))
             .max()
             .unwrap()
