@@ -1,10 +1,7 @@
 use std::cmp;
 use std::collections::HashSet;
 
-type Pixel = bool;
 type Coord = (isize, isize);
-
-const DARK: Pixel = false;
 
 struct Enhancement([u128; 4]);
 
@@ -43,7 +40,7 @@ impl Enhancement {
 #[derive(Clone)]
 struct Image {
     light_pixels: HashSet<Coord>,
-    outside: Pixel,
+    is_outside_light: bool,
     top: isize,
     left: isize,
     bottom: isize,
@@ -72,7 +69,7 @@ impl Image {
         
         Self { 
             light_pixels,
-            outside: DARK,
+            is_outside_light: false,
             top: 0,
             left: 0,
             bottom: max_height as isize,
@@ -105,7 +102,7 @@ impl Image {
             let bit = if self.is_coord_inbound(&coord) {
                 self.light_pixels.contains(&coord) as usize
             } else {
-                self.outside as usize
+                self.is_outside_light as usize
             };
             
             idx |= bit << i;
@@ -120,7 +117,7 @@ impl Image {
         self.right += 1;
         self.bottom += 1;
         
-        if self.outside == DARK {
+        if !self.is_outside_light {
             return
         }
         
@@ -142,7 +139,7 @@ impl Image {
         
         let clone = Self {
             light_pixels: std::mem::take(&mut self.light_pixels),
-            outside: self.outside,
+            is_outside_light: self.is_outside_light,
             top: self.top,
             left: self.left,
             right: self.right,
@@ -159,7 +156,7 @@ impl Image {
         }
         
         if enhancement.is_light(0) {
-            self.outside = !self.outside;
+            self.is_outside_light = !self.is_outside_light;
         }
     }
     
