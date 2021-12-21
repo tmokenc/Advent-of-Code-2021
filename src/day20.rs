@@ -72,8 +72,8 @@ impl Image {
             is_outside_light: false,
             top: 0,
             left: 0,
-            bottom: max_height as isize,
-            right: max_width as isize,
+            bottom: max_height,
+            right: max_width,
         }
     }
     
