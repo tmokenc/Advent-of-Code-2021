@@ -18,6 +18,7 @@ cargo run --release -- {DAY_NUMBER}
 
 - **Day 15** - Dijkstra path finding algorithm
 - **Day 16** - Lisp runtime implementation
+- **Day 19** - 3D vector rotation
 - **Day 21** - *Using Steins Gate* to count timeline branches
 - *Memory check* - day6 day14, these will cost terabytes of RAM if not using the right algorithm
 
@@ -48,12 +49,14 @@ These timing was done on my shitty $5 VPS
 | [19 - Beacon Scanner](/src/day19.rs) | 21s 394ms | 82ns | 5us 190ns | [🔗](https://adventofcode.com/2021/day/19) |
 | [20 - Trench Map](/src/day20.rs) | 677us | 10ms 355us | 629ms | [🔗](https://adventofcode.com/2021/day/20) |
 | [21 - Dirac Dice](/src/day21.rs) | 250ns | 1us 194ns | 23ms 612us | [🔗](https://adventofcode.com/2021/day/21) |
+| [22 - Reactor Reboot](/src/day22.rs) | 283us 973ns | 384us 484ns | 4ms 874us | [🔗](https://adventofcode.com/2021/day/22) |
 
 #### Note
 - **Day 15 part 2**: ~~yep, [1 hour and 20 minutes](https://imgur.com/a/yAlGIHN)~~ Well, its execution time is now under 200 milliseconds...
 - **Day 16**: The bit reader can be *a lot* faster, I use an inefficient implementation here
 - **Day 17 part 2**: Brute forced it, computer's problems require programming solutions
 - **Day 19**: I calculate the beacons and scanners location while parsing the input since it does not require the full input to be done, that's why the execution times are fast but the parsing is not
+- **Day 22**: Not the algorithm that I came up with, rather say it's a port of (this cool Javascript impletation)[https://www.reddit.com/r/adventofcode/comments/rlxhmg/2021_day_22_solutions/hpjbx3t/] instead, because it's extremely cooool
 
 ## Dependencies
 - **humantime** - to display the running time
