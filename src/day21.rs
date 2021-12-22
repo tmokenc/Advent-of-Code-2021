@@ -3,7 +3,7 @@ use std::collections::HashMap;
 type GameState = [Player; 2];
 
 // got these number on reddit...
-const QUANTUM_DICE: [(u64, u64); 7] = [(3, 1), (4, 3), (5, 6), (6, 7), (7, 6), (8, 3), (9, 1)];
+const QUANTUM_ROLLS: [(u64, u64); 7] = [(3, 1), (4, 3), (5, 6), (6, 7), (7, 6), (8, 3), (9, 1)];
 
 #[derive(Clone, PartialEq, Eq, Hash)]
 struct Player {
@@ -52,10 +52,10 @@ impl SteinsGate {
         for (state, universes_count) in std::mem::take(&mut self.universes) {
             self.in_progress -= universes_count;
 
-            for (roll, cases) in QUANTUM_DICE {
+            for (roll, cases) in QUANTUM_ROLLS {
                 let mut new_state = state.clone();
                 let related_universes_count = cases * universes_count;
-                
+
                 new_state[player_idx].step_by(roll);
 
                 if new_state[player_idx].score >= 21 {
