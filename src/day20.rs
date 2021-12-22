@@ -10,25 +10,25 @@ impl Enhancement {
         let mut enhancement = [0u128; 4];
         let mut idx = 0;
         let mut bits = 0;
-        
+
         for ch in input.chars() {
             let bit_idx = idx % 128;
             let bit = (ch == '#') as u128;
-            
+
             bits |= bit << bit_idx;
-            
+
             if bit_idx == 127 {
                 let arr_idx = idx / 128;
                 enhancement[arr_idx] = bits;
                 bits = 0
             }
-            
+
             idx += 1;
         }
-        
+
         Self(enhancement)
     }
-    
+
     fn is_light(&self, idx: usize) -> bool {
         let arr_idx = idx / 128;
         let bit_idx = idx % 128;
@@ -48,26 +48,28 @@ struct Image {
 }
 
 impl Image {
-    fn parse<'a>(lines: impl Iterator<Item=&'a str>) -> Self {
+    fn parse<'a>(lines: impl Iterator<Item = &'a str>) -> Self {
         let mut light_pixels = HashSet::new();
         let mut max_width = 0;
         let mut max_height = 0;
-        
+
         for (line, y) in lines.zip(0..) {
             for (ch, x) in line.chars().zip(0..) {
                 max_width = cmp::max(max_width, x);
-                
+
                 match ch {
-                    '#' => { light_pixels.insert((x, y)); },
+                    '#' => {
+                        light_pixels.insert((x, y));
+                    }
                     '.' => (),
                     _ => unreachable!(),
                 }
             }
-            
+
             max_height = cmp::max(max_height, y);
         }
-        
-        Self { 
+
+        Self {
             light_pixels,
             is_outside_light: false,
             top: 0,
@@ -76,67 +78,67 @@ impl Image {
             right: max_width,
         }
     }
-    
+
     fn is_coord_inbound(&self, coord: &Coord) -> bool {
         let check_x = coord.0 >= self.left && coord.0 <= self.right;
         let check_y = coord.1 >= self.top && coord.1 <= self.bottom;
         check_x && check_y
     }
-    
+
     fn get_enhancement_idx(&self, x: isize, y: isize) -> usize {
         let mut idx = 0;
-        
+
         let coords = [
-            (x+1, y+1),
-            (x, y+1),
-            (x-1, y+1),
-            (x+1, y),
+            (x + 1, y + 1),
+            (x, y + 1),
+            (x - 1, y + 1),
+            (x + 1, y),
             (x, y),
-            (x-1, y),
-            (x+1, y-1),
-            (x, y-1),
-            (x-1, y-1),
+            (x - 1, y),
+            (x + 1, y - 1),
+            (x, y - 1),
+            (x - 1, y - 1),
         ];
-        
+
         for (i, coord) in coords.into_iter().enumerate() {
             let bit = if self.is_coord_inbound(&coord) {
                 self.light_pixels.contains(&coord) as usize
             } else {
                 self.is_outside_light as usize
             };
-            
+
             idx |= bit << i;
         }
-        
+
         idx
     }
-    
+
     fn padding_one(&mut self) {
         self.top -= 1;
         self.left -= 1;
         self.right += 1;
         self.bottom += 1;
-        
+
         if !self.is_outside_light {
-            return
+            return;
         }
-        
+
         let top_iter = (self.left..=self.right).map(|x| (x, self.top));
         let bottom_iter = (self.left..=self.right).map(|x| (x, self.bottom));
-        let left_iter = ((self.top+1)..self.bottom).map(|y| (self.left, y));
-        let right_iter = ((self.top+1)..self.bottom).map(|y| (self.right, y));
-        
+        let left_iter = ((self.top + 1)..self.bottom).map(|y| (self.left, y));
+        let right_iter = ((self.top + 1)..self.bottom).map(|y| (self.right, y));
+
         let light_coords = top_iter
             .chain(bottom_iter)
             .chain(left_iter)
             .chain(right_iter);
-        
+
         self.light_pixels.extend(light_coords);
     }
-    
+
     fn apply_enhancement(&mut self, enhancement: &Enhancement) {
         self.padding_one();
-        
+
         let clone = Self {
             light_pixels: std::mem::take(&mut self.light_pixels),
             is_outside_light: self.is_outside_light,
@@ -145,7 +147,7 @@ impl Image {
             right: self.right,
             bottom: self.bottom,
         };
-        
+
         for x in self.left..=self.right {
             for y in self.top..=self.bottom {
                 let idx = clone.get_enhancement_idx(x, y);
@@ -154,12 +156,12 @@ impl Image {
                 }
             }
         }
-        
+
         if enhancement.is_light(0) {
             self.is_outside_light = !self.is_outside_light;
         }
     }
-    
+
     fn count_light(&self) -> u64 {
         self.light_pixels.len() as u64
     }
@@ -173,27 +175,27 @@ pub struct TrenchMap {
 impl crate::AdventOfCode for TrenchMap {
     fn new(input: &str) -> Self {
         let mut lines = input.lines();
-        
-        Self { 
-            enhancement: Enhancement::parse(lines.next().unwrap()), 
+
+        Self {
+            enhancement: Enhancement::parse(lines.next().unwrap()),
             image: Image::parse(lines.skip(1)),
         }
     }
-    
+
     fn part1(&self) -> u64 {
         let mut image = self.image.clone();
         image.apply_enhancement(&self.enhancement);
         image.apply_enhancement(&self.enhancement);
         image.count_light()
     }
-    
+
     fn part2(&self) -> u64 {
         let mut image = self.image.clone();
-        
+
         for _ in 0..50 {
             image.apply_enhancement(&self.enhancement);
         }
-        
+
         image.count_light()
     }
 }

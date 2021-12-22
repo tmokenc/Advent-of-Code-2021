@@ -40,6 +40,7 @@ These timing was done on my shitty $5 VPS
 | [18 - Snailfish](/src/day18.rs) | 93us | 2ms 471us | 44ms 780us | [🔗](https://adventofcode.com/2021/day/18) |
 | [19 - Beacon Scanner](/src/day19.rs) | 21s 394ms | 82ns | 5us 190ns | [🔗](https://adventofcode.com/2021/day/19) |
 | [20 - Trench Map](/src/day20.rs) | 677us | 10ms 355us | 629ms | [🔗](https://adventofcode.com/2021/day/20) |
+| [21 - Dirac Dice](/src/day21.rs) | 302ns | 1us 194ns | 24ms 412us | [🔗](https://adventofcode.com/2021/day/21) |
 
 #### Note
 - **Day 15 part 2**: ~~yep, [1 hour and 20 minutes](https://imgur.com/a/yAlGIHN)~~ Well, its execution time is now under 200 milliseconds...
