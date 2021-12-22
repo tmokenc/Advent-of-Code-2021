@@ -23,13 +23,13 @@ impl Player {
     }
 }
 
-struct SteinGate {
+struct SteinsGate {
     universes: HashMap<GameState, u64>,
     in_progress: u64,
     completed: [u64; 2],
 }
 
-impl SteinGate {
+impl SteinsGate {
     fn new(state: GameState) -> Self {
         let mut universes = HashMap::new();
         universes.insert(state, 1);
@@ -49,22 +49,22 @@ impl SteinGate {
     }
 
     fn play_turn(&mut self, player_idx: usize) {
-        for (old_state, old_count) in std::mem::take(&mut self.universes) {
-            self.in_progress -= old_count;
+        for (state, universes_count) in std::mem::take(&mut self.universes) {
+            self.in_progress -= universes_count;
 
             for (roll, cases) in QUANTUM_DICE {
-                let mut new_state = old_state.clone();
+                let mut new_state = state.clone();
+                let related_universes_count = cases * universes_count;
+                
                 new_state[player_idx].step_by(roll);
 
-                let universes_in_progress = cases * old_count;
-
                 if new_state[player_idx].score >= 21 {
-                    self.completed[player_idx] += universes_in_progress;
+                    self.completed[player_idx] += related_universes_count;
                     continue;
                 }
 
-                *self.universes.entry(new_state).or_insert(0) += universes_in_progress;
-                self.in_progress += universes_in_progress;
+                *self.universes.entry(new_state).or_insert(0) += related_universes_count;
+                self.in_progress += related_universes_count;
             }
         }
     }
@@ -114,8 +114,8 @@ impl crate::AdventOfCode for DiracDice {
     }
 
     fn part2(&self) -> u64 {
-        let mut stein_gate = SteinGate::new(self.state.clone());
-        stein_gate.progress();
-        stein_gate.completed.into_iter().max().unwrap()
+        let mut steins_gate = SteinsGate::new(self.state.clone());
+        steins_gate.progress();
+        steins_gate.completed.into_iter().max().unwrap()
     }
 }
