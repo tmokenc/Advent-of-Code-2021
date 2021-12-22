@@ -18,7 +18,7 @@ cargo run --release -- {DAY_NUMBER}
 
 - **Day 15** - Dijkstra path finding algorithm
 - **Day 16** - Lisp runtime implementation
-- **Day 21** - *Using Steins Gate* to count universe branches
+- **Day 21** - *Using Steins Gate* to count timeline branches
 - *Memory check* - day6 day14, these will cost terabytes of RAM if not using the right algorithm
 
 ## Performance
@@ -42,15 +42,16 @@ These timing was done on my shitty $5 VPS
 | [13 - Transparent Origami](/src/day13.rs) | 209us | 152us | 1ms 120us | [🔗](https://adventofcode.com/2021/day/13) |
 | [14 - Extended Polymerization](/src/day14.rs) | 8us | 35us | 164us | [🔗](https://adventofcode.com/2021/day/14) |
 | [15 - Chiton](/src/day15.rs) | 16us | 5ms 977us | 183ms | [🔗](https://adventofcode.com/2021/day/15) |
-| [16 - Packet Decoder](/src/day16.rs) | - | - | - | [🔗](https://adventofcode.com/2021/day/16) |
+| [16 - Packet Decoder](/src/day16.rs) | 220us | 11us 717ns | 3us 779ns | [🔗](https://adventofcode.com/2021/day/16) |
 | [17 - Trick Shot](/src/day17.rs) | 999ns | 100ns | 443us 027ns | [🔗](https://adventofcode.com/2021/day/17) |
 | [18 - Snailfish](/src/day18.rs) | 93us | 2ms 471us | 44ms 780us | [🔗](https://adventofcode.com/2021/day/18) |
 | [19 - Beacon Scanner](/src/day19.rs) | 21s 394ms | 82ns | 5us 190ns | [🔗](https://adventofcode.com/2021/day/19) |
 | [20 - Trench Map](/src/day20.rs) | 677us | 10ms 355us | 629ms | [🔗](https://adventofcode.com/2021/day/20) |
-| [21 - Dirac Dice](/src/day21.rs) | 302ns | 1us 194ns | 24ms 412us | [🔗](https://adventofcode.com/2021/day/21) |
+| [21 - Dirac Dice](/src/day21.rs) | 250ns | 1us 194ns | 23ms 612us | [🔗](https://adventofcode.com/2021/day/21) |
 
 #### Note
 - **Day 15 part 2**: ~~yep, [1 hour and 20 minutes](https://imgur.com/a/yAlGIHN)~~ Well, its execution time is now under 200 milliseconds...
+- **Day 16**: The bit reader can be *a lot* faster, I use an inefficient implementation here
 - **Day 17 part 2**: Brute forced it, computer's problems require programming solutions
 - **Day 19**: I calculate the beacons and scanners location while parsing the input since it does not require the full input to be done, that's why the execution times are fast but the parsing is not
 

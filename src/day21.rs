@@ -49,22 +49,22 @@ impl SteinsGate {
     }
 
     fn play_turn(&mut self, player_idx: usize) {
-        for (state, timelines_count) in std::mem::take(&mut self.timelines) {
-            self.in_progress -= timelines_count;
+        for (state, timeline_count) in std::mem::take(&mut self.timelines) {
+            self.in_progress -= timeline_count;
 
             for (roll, cases) in QUANTUM_ROLLS {
                 let mut new_state = state.clone();
-                let related_timelines_count = cases * timelines_count;
+                let related_timeline_count = cases * timeline_count;
 
                 new_state[player_idx].step_by(roll);
 
                 if new_state[player_idx].score >= 21 {
-                    self.completed[player_idx] += related_timelines_count;
+                    self.completed[player_idx] += related_timeline_count;
                     continue;
                 }
 
-                *self.timelines.entry(new_state).or_insert(0) += related_timelines_count;
-                self.in_progress += related_timelines_count;
+                *self.timelines.entry(new_state).or_insert(0) += related_timeline_count;
+                self.in_progress += related_timeline_count;
             }
         }
     }
