@@ -56,7 +56,7 @@ These timing was done on my shitty $5 VPS
 - **Day 16**: The bit reader can be *a lot* faster, I use an inefficient implementation here
 - **Day 17 part 2**: Brute forced it, computer's problems require programming solutions
 - **Day 19**: I calculate the beacons and scanners location while parsing the input since it does not require the full input to be done, that's why the execution times are fast but the parsing is not
-- **Day 22**: Not the algorithm that I came up with, rather say it's a port of (this cool Javascript impletation)[https://www.reddit.com/r/adventofcode/comments/rlxhmg/2021_day_22_solutions/hpjbx3t/] instead, because it's extremely cooool
+- **Day 22**: Not the algorithm that I came up with, rather say it's a port of [this cool Javascript impletation](https://www.reddit.com/r/adventofcode/comments/rlxhmg/2021_day_22_solutions/hpjbx3t/) instead, because it's extremely cooool
 
 ## Dependencies
 - **humantime** - to display the running time
