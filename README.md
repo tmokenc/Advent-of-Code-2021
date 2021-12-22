@@ -14,6 +14,13 @@ To run only a specific day (replace {DAY_NUMBER} with the number of that day)
 cargo run --release -- {DAY_NUMBER}
 ```
 
+## Learned
+
+- **Day 15** - Dijkstra path finding algorithm
+- **Day 16** - Lisp runtime implementation
+- **Day 21** - *Using Steins Gate* to count universe branches
+- *Memory check* - day6 day14, these will cost terabytes of RAM if not using the right algorithm
+
 ## Performance
 
 These timing was done on my shitty $5 VPS
@@ -45,7 +52,7 @@ These timing was done on my shitty $5 VPS
 #### Note
 - **Day 15 part 2**: ~~yep, [1 hour and 20 minutes](https://imgur.com/a/yAlGIHN)~~ Well, its execution time is now under 200 milliseconds...
 - **Day 17 part 2**: Brute forced it, computer's problems require programming solutions
-- **Day 19**: I calculate the beacons and scanners location while parsing the input since it does not require the full input to be done, that's why the execution time are fast but the parsing is not
+- **Day 19**: I calculate the beacons and scanners location while parsing the input since it does not require the full input to be done, that's why the execution times are fast but the parsing is not
 
 ## Dependencies
 - **humantime** - to display the running time

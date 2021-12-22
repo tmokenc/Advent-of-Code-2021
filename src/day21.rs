@@ -24,18 +24,18 @@ impl Player {
 }
 
 struct SteinsGate {
-    universes: HashMap<GameState, u64>,
+    timelines: HashMap<GameState, u64>,
     in_progress: u64,
     completed: [u64; 2],
 }
 
 impl SteinsGate {
     fn new(state: GameState) -> Self {
-        let mut universes = HashMap::new();
-        universes.insert(state, 1);
+        let mut timelines = HashMap::new();
+        timelines.insert(state, 1);
 
         Self {
-            universes,
+            timelines,
             in_progress: 1,
             completed: [0; 2],
         }
@@ -49,22 +49,22 @@ impl SteinsGate {
     }
 
     fn play_turn(&mut self, player_idx: usize) {
-        for (state, universes_count) in std::mem::take(&mut self.universes) {
-            self.in_progress -= universes_count;
+        for (state, timelines_count) in std::mem::take(&mut self.timelines) {
+            self.in_progress -= timelines_count;
 
             for (roll, cases) in QUANTUM_ROLLS {
                 let mut new_state = state.clone();
-                let related_universes_count = cases * universes_count;
+                let related_timelines_count = cases * timelines_count;
 
                 new_state[player_idx].step_by(roll);
 
                 if new_state[player_idx].score >= 21 {
-                    self.completed[player_idx] += related_universes_count;
+                    self.completed[player_idx] += related_timelines_count;
                     continue;
                 }
 
-                *self.universes.entry(new_state).or_insert(0) += related_universes_count;
-                self.in_progress += related_universes_count;
+                *self.timelines.entry(new_state).or_insert(0) += related_timelines_count;
+                self.in_progress += related_timelines_count;
             }
         }
     }
