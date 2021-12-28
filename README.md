@@ -58,8 +58,9 @@ These timing was done on my shitty $5 VPS
 - **Day 15 part 2**: ~~yep, [1 hour and 20 minutes](https://imgur.com/a/yAlGIHN)~~ Well, its execution time is now under 200 milliseconds...
 - **Day 16**: The bit reader can be *a lot* faster, I use an inefficient implementation here
 - **Day 17 part 2**: Brute forced it, computer's problems require programming solutions
-- **Day 19**: I calculate the beacons and scanners location while parsing the input since it does not require the full input to be done, that's why the execution times are fast but the parsing is not
+- **Day 19**: I calculate the beacons and scanners location while parsing the input since it does not require the full input to be done, that's why the execution times are fast but the parsing is not. Also I have no idea how to optimize it
 - **Day 22**: Not the algorithm that I came up with, rather say it's a port of [this cool Javascript impletation](https://www.reddit.com/r/adventofcode/comments/rlxhmg/2021_day_22_solutions/hpjbx3t/) instead, because it's extremely cooool
+- **Day 23**: Solved it by hand thanks to [this website](https://amphipod.net/), maybe I will done it programmatically later
 - **Day 24**: The input for example and real data is the same, because there is no example for it. Solved it by hand because it's easier...
 
 ## Dependencies
