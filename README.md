@@ -1,6 +1,33 @@
 # Advent-of-Code-2021
 My solution for the advent of code 2021, written in Rust
 
+## Lessons Learned
+
+- Awareness of memory explosion (day6 day14)
+- Dijkstra algorithm to find shortest path (day15 day23)
+- Binary Tree operations (day16)
+- Writing lisp-like language runtime (day16)
+- ~~Brute force >>> math (day17)~~
+- 3D vector rotations (day19)
+- Dealing with the infinity (day20)
+- Quantum probability (day21)
+- Cube intersection (day22)
+
+## Remarkable Memories
+- **Day 3**: I have no idea what is going on but it runs correctly
+- **Day 6**: My solution for part 1 run smoothly, then fked up at part 2 because it would cost 18TB of RAM, then reimplement it the other way, the new algorithm only takes 72 Bytes of RAM, no heap allocation, shorter and runs faster that makes me feel like a dumb for being proud of the first implemetation 🐧
+- **Day 13**: Man I love this puzzle
+- **Day 14**: It gives me a deja vu feeling because of day 6, and I was right, 20TB of RAM for part2 if using naive algorithm
+- **Day 15**: My first implementation of Dijkstra runs for 1h20m for part2, then use a proper BinaryHeap takes it down to 168ms
+- **Day 16**: Creating a runtime for a programming language, truly programming joy
+- **Day 17**: Tried to done it in math, but brute force is wayyyy shorter and easier
+- **Day 19**: I stared at my rubik's cube for 20 minutes to figure out all the rotations
+- **Day 20**: The input is truly evil because 9 dark pixels being translated into a white pixel, and the image size is infinite
+- **Day 21**: Playing a game using quantum dice is fun, I open the Steins Gate to looks at 786316482957123 timelines/universes to find that I win in 444356092776315 timelines/universes
+- **Day 22**: Learn about 3D space and cube intersection for 2 hours then found an algorithm that ignore all of them and runs faster than mine
+- **Day 23**: Another Dijkstra problem, but solving it by hand is faster 🐧
+- **Day 24**: I thought that I would be implementing a CPU but no, the input has sooo much of repetition and can be solved by hand
+
 ## Error Handle
 **NOPE!!!** `unwrap()` everything everywhere
 
@@ -13,14 +40,6 @@ To run only a specific day (replace {DAY_NUMBER} with the number of that day)
 ```sh
 cargo run --release -- {DAY_NUMBER}
 ```
-
-## Learned
-
-- **Day 15** - Dijkstra path finding algorithm
-- **Day 16** - Lisp runtime implementation
-- **Day 19** - 3D vector rotation
-- **Day 21** - *Using Steins Gate* to count timeline branches
-- *Memory check* - day6 day14, these will cost terabytes of RAM if not using the right algorithm
 
 ## Performance
 
