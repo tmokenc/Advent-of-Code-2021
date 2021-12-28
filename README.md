@@ -51,7 +51,7 @@ These timing was done on my shitty $5 VPS
 | [21 - Dirac Dice](/src/day21.rs) | 250ns | 1us 194ns | 23ms 612us | [🔗](https://adventofcode.com/2021/day/21) |
 | [22 - Reactor Reboot](/src/day22.rs) | 283us 973ns | 384us 484ns | 4ms 874us | [🔗](https://adventofcode.com/2021/day/22) |
 | [23 - Amphipod](/src/day23.rs) | - | - | - | [🔗](https://adventofcode.com/2021/day/23) |
-| [24 - Arithmetic Logic Unit](/src/day24.rs) | - | - | - | [🔗](https://adventofcode.com/2021/day/24) |
+| [24 - Arithmetic Logic Unit](/src/day24.rs) | 11us 138ns | 130ns | 112ns | [🔗](https://adventofcode.com/2021/day/24) |
 | [25 - Sea Cucumber](/src/day25.rs) | 259us 90ns | 216ms 56us | - | [🔗](https://adventofcode.com/2021/day/25) |
 
 #### Note
@@ -60,7 +60,7 @@ These timing was done on my shitty $5 VPS
 - **Day 17 part 2**: Brute forced it, computer's problems require programming solutions
 - **Day 19**: I calculate the beacons and scanners location while parsing the input since it does not require the full input to be done, that's why the execution times are fast but the parsing is not
 - **Day 22**: Not the algorithm that I came up with, rather say it's a port of [this cool Javascript impletation](https://www.reddit.com/r/adventofcode/comments/rlxhmg/2021_day_22_solutions/hpjbx3t/) instead, because it's extremely cooool
-- **Day 24**: Solved it by hand because it's easier...
+- **Day 24**: The input for example and real data is the same, because there is no example for it. Solved it by hand because it's easier...
 
 ## Dependencies
 - **humantime** - to display the running time
