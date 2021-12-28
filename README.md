@@ -43,13 +43,16 @@ These timing was done on my shitty $5 VPS
 | [13 - Transparent Origami](/src/day13.rs) | 209us | 152us | 1ms 120us | [🔗](https://adventofcode.com/2021/day/13) |
 | [14 - Extended Polymerization](/src/day14.rs) | 8us | 35us | 164us | [🔗](https://adventofcode.com/2021/day/14) |
 | [15 - Chiton](/src/day15.rs) | 16us | 5ms 977us | 183ms | [🔗](https://adventofcode.com/2021/day/15) |
-| [16 - Packet Decoder](/src/day16.rs) | 220us | 11us 717ns | 3us 779ns | [🔗](https://adventofcode.com/2021/day/16) |
+| [16 - Packet Decoder](/src/day16.rs) | 220us | 2us 776ns | 3us 779ns | [🔗](https://adventofcode.com/2021/day/16) |
 | [17 - Trick Shot](/src/day17.rs) | 999ns | 100ns | 443us 027ns | [🔗](https://adventofcode.com/2021/day/17) |
 | [18 - Snailfish](/src/day18.rs) | 93us | 2ms 471us | 44ms 780us | [🔗](https://adventofcode.com/2021/day/18) |
 | [19 - Beacon Scanner](/src/day19.rs) | 21s 394ms | 82ns | 5us 190ns | [🔗](https://adventofcode.com/2021/day/19) |
 | [20 - Trench Map](/src/day20.rs) | 677us | 10ms 355us | 629ms | [🔗](https://adventofcode.com/2021/day/20) |
 | [21 - Dirac Dice](/src/day21.rs) | 250ns | 1us 194ns | 23ms 612us | [🔗](https://adventofcode.com/2021/day/21) |
 | [22 - Reactor Reboot](/src/day22.rs) | 283us 973ns | 384us 484ns | 4ms 874us | [🔗](https://adventofcode.com/2021/day/22) |
+| [23 - Amphipod](/src/day23.rs) | - | - | - | [🔗](https://adventofcode.com/2021/day/23) |
+| [24 - Arithmetic Logic Unit](/src/day24.rs) | - | - | - | [🔗](https://adventofcode.com/2021/day/24) |
+| [25 - Sea Cucumber](/src/day25.rs) | 259us 90ns | 216ms 56us | - | [🔗](https://adventofcode.com/2021/day/25) |
 
 #### Note
 - **Day 15 part 2**: ~~yep, [1 hour and 20 minutes](https://imgur.com/a/yAlGIHN)~~ Well, its execution time is now under 200 milliseconds...
@@ -57,6 +60,7 @@ These timing was done on my shitty $5 VPS
 - **Day 17 part 2**: Brute forced it, computer's problems require programming solutions
 - **Day 19**: I calculate the beacons and scanners location while parsing the input since it does not require the full input to be done, that's why the execution times are fast but the parsing is not
 - **Day 22**: Not the algorithm that I came up with, rather say it's a port of [this cool Javascript impletation](https://www.reddit.com/r/adventofcode/comments/rlxhmg/2021_day_22_solutions/hpjbx3t/) instead, because it's extremely cooool
+- **Day 24**: Solved it by hand because it's easier...
 
 ## Dependencies
 - **humantime** - to display the running time

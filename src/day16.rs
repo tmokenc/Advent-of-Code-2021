@@ -194,15 +194,14 @@ impl ElvesLang {
         }
     }
     
-    fn sub_packets(&self) -> Vec<&ElvesLang> {
-        let mut sub_packets = Vec::new();
+    fn version_sum(&self) -> u64 {
+        let mut sum = self.version as u64;
         
-        match self.value {
-            Value::Literal(_) => (),
-            Value::Operator{ ref packets, .. } => sub_packets.extend(packets),
+        if let Value::Operator { ref packets, .. } = self.value {
+            sum += packets.iter().map(Self::version_sum).sum::<u64>()
         }
         
-        sub_packets
+        sum
     }
     
     fn compute(&self) -> u64 {
@@ -245,15 +244,7 @@ impl crate::AdventOfCode for PacketDecoder {
     }
 
     fn part1(&self) -> u64 {
-        let mut packets: Vec<&ElvesLang> = vec![&self.decoded];
-        let mut res = 0;
-        
-        while let Some(packet) = packets.pop() {
-            res += packet.version as u64;
-            packets.extend(packet.sub_packets());
-        }
-        
-        res
+        self.decoded.version_sum()
     }
 
     fn part2(&self) -> u64 {
