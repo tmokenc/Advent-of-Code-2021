@@ -1,6 +1,9 @@
 # Advent-of-Code-2021
 My solution for the advent of code 2021, written in Rust
 
+#### My other AoC
+- [2020](https://github.com/tmokenc/Advent-of-Code-2020)
+
 ## Lessons Learned
 
 - Awareness of memory explosion (day6 day14)
