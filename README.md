@@ -3,6 +3,7 @@ My solution for the advent of code 2021, written in Rust
 
 #### My other AoC
 - [2020](https://github.com/tmokenc/Advent-of-Code-2020)
+- [2022](https://github.com/tmokenc/Advent-of-Code-2022)
 
 ## Lessons Learned
 
